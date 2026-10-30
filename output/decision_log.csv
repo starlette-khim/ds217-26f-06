@@ -1,0 +1,10 @@
+table,issue,decision,reason
+patients,exact duplicate rows,"Dropped exact repeats with drop_duplicates(), keeping the first copy.",Identical rows are the same patient entered twice and would repeat patient_id in the joins.
+patients,gender spellings that are not a code,"Stripped and lowercased, then mapped each spelling to F/M/X; unknown and blank became missing; stored as a category.","Staff typed the same three genders many ways (woman, Male, NB), and unknown does not identify a code."
+patients,site codes needing normalization,"Uppercased and removed hyphens and spaces so every code reads like N01, S02, or E04.","The same site was typed as n-01, N 01, or S-02, which would split one site into several codes."
+patients,birth_year sentinel 9999,Replaced 9999 with missing and stored birth_year as Int64.,"9999 means not recorded, and keeping it would distort birth_year min, max, and ages."
+visits,weight column named wt_kg in visits_south.csv,Renamed wt_kg to weight_kg before stacking the two visit files.,"The south export used a different column name, so concat would have left two half-empty weight columns."
+visits,sbp sentinel 999 and readings outside 70 through 250,Converted to numbers and kept only 70 through 250 mmHg; 999 and out-of-range values became missing.,999 means not measured and values outside 70 to 250 are not plausible clinic readings.
+visits,impossible and loosely written visit dates,Kept a date only when it was exact YYYY-MM-DD text for a real calendar date; anything else became missing.,"Slash dates, unpadded months, and impossible dates cannot be read reliably as YYYY-MM-DD."
+visits,repeated patient_id and sivit pairs,"After mapping visit labels, kept the later reading by visit_time for each patient and visit.","These are rechecks taken minutes apart, and the later reading is the final measurement for that visit."
+sites,repeated site_code rows,"Kept only current site records, one per site_code, for the join.","N01 and S02 each have a retired name, which would duplicate patients in a many-to-one site join."
