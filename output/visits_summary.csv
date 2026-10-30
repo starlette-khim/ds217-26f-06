@@ -4,7 +4,7 @@ baseline visits,29599
 week12 visits,27582
 visit_date missing,169
 visit_date min,2026-01-05 00:00:00
-isit_date max,2026-07-06 00:00:00
+visit_date max,2026-07-06 00:00:00
 sbp_mmhg missing,456
 sbp_mmhg min,70
 sbp_mmhg max,250
